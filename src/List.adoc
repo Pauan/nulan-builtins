@@ -1,7 +1,7 @@
 .List.nu
 [source]
 ----
-(USE {} = "nulan:Maybe")
+(USE {} = "./Maybe")
 
 (TYPE (List A))
 
@@ -14,7 +14,7 @@
         | nth-modify = nth_modify
         | push }
 
-  (FFI-IMPORT "FFI/List"
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/List")
     # TODO this needs special compiler magic
     (list :: (-> @a (List a)))
 

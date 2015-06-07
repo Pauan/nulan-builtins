@@ -1,7 +1,7 @@
 .String.nu
 [source]
 ----
-(USE {} = "nulan:List")
+(USE {} = "./List")
 
 (TYPE Code-Point)
 

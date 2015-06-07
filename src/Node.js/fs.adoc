@@ -1,8 +1,8 @@
 .fs.nu
 [source]
 ----
-(USE {} = "nulan:Task")
-(USE {} = "nulan:Stream")
+(USE {} = "../Task")
+(USE {} = "../Stream")
 (USE {} = "./path")
 
 (EXPORT { read-file = read_file
@@ -19,7 +19,7 @@
         | files-in-directory = files_in_directory
         | all-files-in-directory = all_files_in_directory }
 
-  (FFI-IMPORT "FFI/fs"
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/Node.js/fs")
     (read_file :: (-> String (Stream String)))
 
     (make_file :: (-> (Stream String) String (Task Void)))

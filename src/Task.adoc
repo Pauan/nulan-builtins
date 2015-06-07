@@ -1,7 +1,7 @@
 .Task.nu
 [source]
 ----
-(USE {} = "nulan:Monad")
+(USE {} = "./Monad")
 
 (TYPE (Task a))
 
@@ -19,7 +19,7 @@
 
   (TYPE Error)
 
-  (FFI-IMPORT "FFI/Task"
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/Task")
     _void :: (Task Void)
 
 

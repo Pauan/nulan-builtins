@@ -1,6 +1,8 @@
 .Cast.nu
 [source]
 ----
+(USE {} = "./Maybe")
+
 (INTERFACE (%Cast-Maybe from to)
   (cast-maybe :: (-> from (Maybe to))))
 
@@ -26,7 +28,7 @@
     (*some (cast from)))
 
 (EXPORT {}
-  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "Cast")
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/Cast")
     (String_to_Integer :: (-> String (-> Integer a) a a))
     (Integer_to_String :: (-> Integer String))
 

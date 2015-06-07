@@ -3,7 +3,7 @@
 ----
 (TYPE (Maybe a)
   (*some a)
-  (*none))
+  *none)
 
 (FUNCTION
   "If the first argument is `(*some foo)`, then `foo` is returned.
@@ -25,7 +25,7 @@
     (MATCH x
       (*some value)
         value
-      (*none)
+      *none
         y))
 
 # TODO is this a good idea ?

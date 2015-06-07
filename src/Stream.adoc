@@ -1,9 +1,9 @@
 .Stream.nu
 [source]
 ----
-(USE {} = "nulan:String")
-(USE {} = "nulan:Maybe")
-(USE {} = "nulan:Task")
+(USE {} = "./String")
+(USE {} = "./Maybe")
+(USE {} = "./Task")
 
 (TYPE (Stream a))
 
@@ -17,7 +17,7 @@
         | peek
         | pull! = pull }
 
-  (FFI-IMPORT "FFI/Stream"
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/Stream")
     (make_stream :: (-> (-> (Input a) (Task Void))
                         (Stream a)))
 

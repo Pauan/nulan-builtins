@@ -1,10 +1,10 @@
 .fs.nu
 [source]
 ----
-(USE {} = "nulan:Task")
-(USE {} = "nulan:List")
-(USE {} = "nulan:String")
-(USE {} = "nulan:Stream")
+(USE {} = "../Task")
+(USE {} = "../List")
+(USE {} = "../String")
+(USE {} = "../Stream")
 
 (EXPORT { pipe! = pipe
         | pipe-ignore-status! = pipe_ignore_status
@@ -15,7 +15,7 @@
         | with-directory! = with_directory
         | arguments = _arguments }
 
-  (FFI-IMPORT "FFI/script"
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/Node.js/script")
     stdin :: (Stream String)
     (pipe_stdout :: (-> (Stream String) (Task Void)))
     (pipe_stderr :: (-> (Stream String) (Task Void)))

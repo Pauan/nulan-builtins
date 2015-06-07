@@ -3,7 +3,7 @@
 ----
 (TYPE (Lazy a))
 
-(FFI-IMPORT "FFI/Lazy"
+(FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/Lazy")
   (lazy :: (-> (-> a) (Lazy a)))
   (force :: (-> (Lazy a) a)))
 ----

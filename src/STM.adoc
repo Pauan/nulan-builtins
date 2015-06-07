@@ -1,8 +1,8 @@
 .STM.nu
 [source]
 ----
-(USE {} = "nulan:Task")
-(USE {} = "nulan:Monad")
+(USE {} = "./Task")
+(USE {} = "./Monad")
 
 (TYPE (STM a))
 
@@ -18,7 +18,7 @@
         | or
         | ref-set! = stm_ref_set }
 
-  (FFI-IMPORT "FFI/STM"
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/STM")
     (_wrap :: (-> a (STM a)))
 
     (_bind :: (-> (STM a) (-> a (STM b)) (STM b)))

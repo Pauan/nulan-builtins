@@ -1,13 +1,13 @@
 .Time.nu
 [source]
 ----
-(USE {} = "nulan:Task")
+(USE {} = "./Task")
 
 
 (EXPORT { delay
         | current-time = current_time }
 
-  (FFI-IMPORT "FFI/Time"
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/Time")
     "When executed, it will wait for a certain number of milliseconds, and
      then returns `Void`.
 
