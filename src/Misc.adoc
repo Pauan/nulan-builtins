@@ -6,7 +6,7 @@
     `(MATCH ,x
        ,@patterns
        _
-         (FAIL)))
+         (fail "No patterns matched")))
 
 (MACRO
   (<< first @rest)

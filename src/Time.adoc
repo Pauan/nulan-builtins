@@ -5,7 +5,8 @@
 (USE {} = "./Integer")
 (USE {} = "./Monad")
 (USE {} = "./Math")
-(USE {} = "./Compare")
+(USE {} = "./Order")
+(USE {} = "./Boolean")
 
 (EXPORT { delay
         | current-time = current_time }

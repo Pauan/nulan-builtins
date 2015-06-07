@@ -1,0 +1,52 @@
+.Boolean.nu
+[source]
+----
+# We don't use JavaScript true/false
+(TYPE Boolean
+  *true
+  *false)
+
+(MACRO
+  (IF test then else)
+    `(MATCH ,test
+       *true
+         ,then
+       *false
+         ,else))
+
+# TODO this can be a tiny bit more efficient
+(MACRO
+  (AND @a)
+    (foldr a *true -> new old
+      `(IF ,new
+         ,old
+         *false)))
+
+# TODO this can be a tiny bit more efficient
+(MACRO
+  (OR @a)
+    (foldr a *false -> new old
+      `(IF ,new
+         *true
+         ,old)))
+
+(FUNCTION
+  (not :: (-> Boolean Boolean))
+  (not x)
+    (IF x
+      *false
+      *true))
+
+(INTERFACE (%Equal a)
+  (equal? :: (-> a a Boolean)))
+
+(IMPLEMENT (%Equal Boolean)
+  (equal? x y)
+    (IF x
+      (IF y
+        *true
+        *false)
+      (IF y
+        *false
+        *true)))
+----

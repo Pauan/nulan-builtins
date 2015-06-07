@@ -1,0 +1,40 @@
+.Order.nu
+[source]
+----
+(USE {} = "./Boolean")
+
+(TYPE Order
+  *less
+  *equal
+  *more)
+
+(INTERFACE (%Order a)
+  (order :: (-> a a Order)))
+
+(IMPLEMENT (IMPLEMENT (%Order a)
+             (%Equal a))
+  (equal? x y)
+    (MATCH (order x y)
+      *equal
+        *true
+      _
+        *false))
+
+(FUNCTION
+  (more? :: (-> a a Boolean))
+  (more? x y)
+    (MATCH (order x y)
+      *more
+        *true
+      _
+        *false))
+
+(FUNCTION
+  (less? :: (-> a a Boolean))
+  (less? x y)
+    (MATCH (order x y)
+      *less
+        *true
+      _
+        *false))
+----
