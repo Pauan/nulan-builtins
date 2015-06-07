@@ -2,11 +2,23 @@
 [source]
 ----
 (USE {} = "./Maybe")
+(USE {} = "./Integer")
+(USE {} = "./Monoid")
 
-(TYPE (List A))
+ #\
+ # This relies upon two things:
+ #
+ #   1) Internally, Nulan represents @ using JavaScript Arrays.
+ #
+ #   2) If there's only 1 data function for a type, and the data function
+ #      accepts exactly 1 JavaScript argument, Nulan will optimize it away
+ #      completely.
+ #
+ # Therefore, calling `(*list 1 2 3)` returns the JavaScript array `[1, 2, 3]`
+\#
+(TYPE (List a)
+  (*list @a))
 
-
-# TODO pattern matching on (list ...)
 (EXPORT { list
         | nth
         | nth-insert = nth_insert
@@ -15,16 +27,13 @@
         | push }
 
   (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/List")
-    # TODO this needs special compiler magic
-    (list :: (-> @a (List a)))
-
     (list_slice :: (-> (List a) Integer Integer (List a)))
 
     (list_length :: (-> (List a) Integer))
 
     (list_concat :: (-> @(List a) (List a)))
 
-    (nth_get :: (-> (List a) Integer (-> a b) (-> b) b))
+    (nth_get :: (-> (List a) Integer (-> a b) b b))
 
     (nth_insert :: (-> (List a) Integer a (List a)))
 
@@ -36,11 +45,17 @@
     # but it's more efficient to have it be written in the FFI
     (push :: (-> (List a) a (List a))))
 
+  (IMPLEMENT (%Monoid (List a))
+    (empty)
+      (*list)
+
+    (++ @l)
+      (list_concat @l))
 
   (FUNCTION
     (nth :: (-> (List a) Integer (Maybe a)))
     (nth l i)
-      (nth_get l i *something *nothing)))
+      (nth_get l i *some *none)))
 
 
 (FUNCTION

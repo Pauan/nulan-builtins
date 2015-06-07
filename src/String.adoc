@@ -1,6 +1,7 @@
 .String.nu
 [source]
 ----
+# TODO this is all incorrect, Nulan Strings should be JavaScript Strings
 (USE {} = "./List")
 
 (TYPE Code-Point)

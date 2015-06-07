@@ -2,16 +2,14 @@
 [source]
 ----
 (USE {} = "./Monad")
+(USE {} = "./String")
+(USE {} = "./Error")
 
 (TYPE (Task a))
-
-(INTERFACE (%Error t)
-  (error :: (-> String (t a))))
 
 (EXPORT { FFI-PROGRAM-START
         | void = _void
         | never
-        | sequential
         | concurrent
         | fastest
         | log! = log
@@ -42,45 +40,6 @@
     (_bind :: (-> (Task a)
                   (-> a (Task b))
                   (Task b)))
-
-
-    "When executed, executes all the `Task`s in the `List`, one at a time,
-     from left to right, then returns a `List` of the return values of the
-     `Task`s.
-
-     ''''
-
-     This is the same as using `DO`:
-
-     [source,nulan]
-     ----
-     (DO a = (foo)
-         b = (bar)
-         c = (qux)
-         (wrap (list a b c)))
-     ----
-
-     [source,nulan]
-     ----
-     (sequential (foo) (bar) (qux))
-     ----
-
-     The above two code examples are equivalent: both execute three `Task`s
-     sequentially, returning a `List` of the results.
-
-     The difference is that `sequential` can take in a `List` of `Task`s:
-
-     [source,nulan]
-     ----
-     (sequential @list-of-tasks)
-     ----
-
-     In this case, we have no clue how big `list-of-tasks` is. It could
-     contain dozens, hundreds, or even thousands of `Task`s.
-
-     With `DO`, you can only execute a fixed number of `Task`s, but with
-     `sequential` you can execute a variable number of `Task`s."
-    (sequential :: (-> @(Task a) (Task (List a))))
 
 
     "When executed, executes all the `Task`s in parallel, and when they're all

@@ -23,10 +23,35 @@
          (MATCH ,u
            ,@cases))))
 
-# TODO implement this
-(FUNCTION
-  (sequential :: (IMPLEMENT (%Monad a)
-                   (-> @(a b) (a (List b))))))
+# TODO maybe make `sequential` into an interface, for increased speed for Task ?
+# TODO it would be nice to be able to implement this purely in Nulan
+(EXPORT { sequential }
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/Monad")
+    (_sequential :: (IMPLEMENT (%Monad t)
+                      (-> (IMPLEMENT (%Monad t)
+                            (-> a (t a)))
+                          (IMPLEMENT (%Monad t)
+                            (-> (t a) (-> a (t a)) (t a)))
+                          @(t a)
+                          (t (List a))))))
+
+#\
+  (INTERFACE (%Monad-Sequential t)
+    (sequential :: (-> @(t a) (t (List a)))))
+
+  (IMPLEMENT (IMPLEMENT (%Monad t)
+               (%Monad-Sequential t))
+    (sequential @m)
+      (_sequential wrap bind @m))
+\#
+
+  # TODO will this actually work ?
+  (FUNCTION
+    (sequential :: (IMPLEMENT (%Monad t)
+                     (-> @(t a) (t (List a)))))
+    (sequential @m)
+      (_sequential wrap bind @m)))
+
 
 # TODO better name for this
 (FUNCTION

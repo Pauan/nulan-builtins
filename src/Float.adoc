@@ -1,0 +1,6 @@
+.Float.nu
+[source]
+----
+# Internally, Nulan Floats are JavaScript Numbers
+(TYPE Float)
+----

@@ -1,8 +1,11 @@
 .fs.nu
 [source]
 ----
+(USE {} = "../Monad")
 (USE {} = "../Task")
+(USE {} = "../String")
 (USE {} = "../Stream")
+(USE {} = "../Misc")
 (USE {} = "./path")
 
 (EXPORT { read-file = read_file

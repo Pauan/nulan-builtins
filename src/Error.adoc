@@ -1,0 +1,8 @@
+.Error.nu
+[source]
+----
+(USE {} = "./String")
+
+(INTERFACE (%Error t)
+  (error :: (-> String (t a))))
+----

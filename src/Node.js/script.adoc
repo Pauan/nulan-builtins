@@ -1,9 +1,11 @@
 .fs.nu
 [source]
 ----
+(USE {} = "../Monad")
 (USE {} = "../Task")
 (USE {} = "../List")
 (USE {} = "../String")
+(USE {} = "../Misc")
 (USE {} = "../Stream")
 
 (EXPORT { pipe! = pipe
@@ -32,12 +34,14 @@
 (FUNCTION
   (run! :: (-> String @String (Stream String)))
   (run! cmd @args)
-    (pipe! (empty) cmd @args))
+    (<< (empty)
+        (pipe! cmd @args)))
 
 (FUNCTION
   (run-ignore-status! :: (-> String @String (Stream String)))
   (run-ignore-status! cmd @args)
-    (pipe-ignore-status! (empty) cmd @args))
+    (<< (empty)
+        (pipe-ignore-status! cmd @args)))
 ----
 
 .Examples

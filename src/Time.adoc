@@ -2,7 +2,10 @@
 [source]
 ----
 (USE {} = "./Task")
-
+(USE {} = "./Integer")
+(USE {} = "./Monad")
+(USE {} = "./Math")
+(USE {} = "./Compare")
 
 (EXPORT { delay
         | current-time = current_time }
@@ -38,11 +41,11 @@
   (benchmark :: (-> (Task Void) (Task Integer)))
   (benchmark task)
     (DO now = current-time
-      (LET end = (add now 10000)
+      (LET end = (+ now 10000)
         (LOOP i = 0
           (DO now = current-time
             (IF (less? now end)
               (DO task
-                  (loop (add i 1)))
+                  (loop (+ i 1)))
               (wrap i)))))))
 ----

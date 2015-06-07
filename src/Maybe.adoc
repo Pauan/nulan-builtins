@@ -1,6 +1,8 @@
 .Maybe.nu
 [source]
 ----
+(USE {} = "./Misc")
+
 (TYPE (Maybe a)
   (*some a)
   *none)
@@ -8,7 +10,7 @@
 (FUNCTION
   "If the first argument is `(*some foo)`, then `foo` is returned.
 
-   If the first argument is `(*none)`, then the second argument is
+   If the first argument is `*none`, then the second argument is
    returned.
 
    ''''
@@ -17,7 +19,7 @@
 
    [source,nulan]
    ----
-   # Returns the value for foo, or 0 if foo doesn't have a value
+   # Returns the value for `foo`, or `0` if `foo` doesn't have a value
    (default foo 0)
    ----"
   (default :: (-> (Maybe a) a a))

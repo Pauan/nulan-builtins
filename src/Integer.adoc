@@ -1,0 +1,6 @@
+.Integer.nu
+[source]
+----
+# Internally, Nulan Integers are JavaScript Numbers
+(TYPE Integer)
+----

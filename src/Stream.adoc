@@ -2,8 +2,12 @@
 [source]
 ----
 (USE {} = "./String")
+(USE {} = "./Monad")
 (USE {} = "./Maybe")
 (USE {} = "./Task")
+(USE {} = "./Misc")
+(USE {} = "./Monoid")
+(USE {} = "./Functor")
 
 (TYPE (Stream a))
 
@@ -23,7 +27,7 @@
 
     (with_stream :: (-> (Stream a)
                         (-> a b)
-                        (-> b)
+                        b
                         (-> (Output b) (Task c))
                         (Task c)))
 
@@ -48,7 +52,7 @@
   (each-output! in f)
     (LOOP
       (DO-MATCH (pull! in)
-        (*none)
+        *none
           void
         (*some value)
           (DO (f value)
@@ -59,21 +63,10 @@
   (drain-output! in)
     (LOOP
       (DO-MATCH (pull! in)
-        (*none)
+        *none
           void
         (*some _)
           (loop))))
-
-(FUNCTION
-  (push-drain! :: (-> (Output a) (Input b) b (Task Void)))
-  (push-drain! in out value)
-    # TODO when `drain-output!` gets killed, does it *immediately* stop,
-    #      or is there the possibility that it will consume 1 extra
-    #      value from the Stream ?
-    (fastest
-      (push! out value)
-      (DO (drain-output! in)
-          never)))
 
 (FUNCTION
   (drain :: (-> (Stream a) (Task Void)))
@@ -104,14 +97,15 @@
             (DO (drain-output! in)
                 never))))))
 
-(IMPLEMENT (Stream a)
-  (empty)
-    (make-stream -> _ void)
-
+(IMPLEMENT (%Functor (Stream a))
   (map in f)
     (make-stream -> out
       (each in -> value
-        (push! out (f value))))
+        (push! out (f value)))))
+
+(IMPLEMENT (%Monoid (Stream a))
+  (empty)
+    (make-stream -> _ void)
 
   (++ @s)
     (make-stream -> out
@@ -152,7 +146,7 @@
     (with-stream s -> in
       (LOOP old = init
         (DO-MATCH (pull! in)
-          (*none)
+          *none
             (wrap old)
           (*some value)
             (DO new = (f old value)

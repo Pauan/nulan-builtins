@@ -2,6 +2,9 @@
 [source]
 ----
 (USE {} = "./Maybe")
+(USE {} = "./Integer")
+(USE {} = "./Float")
+(USE {} = "./String")
 
 (INTERFACE (%Cast-Maybe from to)
   (cast-maybe :: (-> from (Maybe to))))
@@ -43,7 +46,7 @@
       (String_to_Integer from *some *none))
 
   (IMPLEMENT (%Cast Integer String)
-    (cast-maybe from)
+    (cast from)
       (Integer_to_String from))
 
   (IMPLEMENT (%Cast-Maybe String Float)
@@ -51,7 +54,7 @@
       (String_to_Float from *some *none))
 
   (IMPLEMENT (%Cast Float String)
-    (cast-maybe from)
+    (cast from)
       (Integer_to_String from))
 
   (IMPLEMENT (%Cast-Maybe Float Integer)
@@ -59,6 +62,6 @@
       (Float_to_Integer from *some *none))
 
   (IMPLEMENT (%Cast Integer Float)
-    (cast-maybe from)
+    (cast from)
       (Integer_to_Float from)))
 ----

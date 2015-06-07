@@ -2,7 +2,9 @@
 [source]
 ----
 (USE {} = "./Task")
+(USE {} = "./Error")
 (USE {} = "./Monad")
+(USE {} = "./String")
 
 (TYPE (STM a))
 
@@ -77,23 +79,23 @@
 (FUNCTION
   (make-mref :: (-> (MRef a)))
   (make-mref)
-    (*mref (make-ref (*none))))
+    (*mref (make-ref *none)))
 
 (FUNCTION
-  (take :: (-> (MRef a) (STM a)))
-  (take (*mref ref))
+  (take! :: (-> (MRef a) (STM a)))
+  (take! (*mref ref))
     (DO-MATCH (ref-get ref)
-      (*none)
+      *none
         (retry)
       (*some value)
-        (DO (ref-set! ref (*none))
+        (DO (ref-set! ref *none)
             (wrap value))))
 
 (FUNCTION
   (put! :: (-> (MRef a) a (STM Void)))
   (put! (*mref ref) value)
     (DO-MATCH (ref-get ref)
-      (*none)
+      *none
         (ref-set! ref (*some value))
       (*some _)
         (retry)))

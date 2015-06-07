@@ -1,0 +1,24 @@
+.Misc.nu
+[source]
+----
+(MACRO
+  (MATCH-FAIL x @patterns)
+    `(MATCH ,x
+       ,@patterns
+       _
+         (FAIL)))
+
+(MACRO
+  (<< first @rest)
+    (foldl first rest -> old new
+      (MATCH-FAIL new
+        `(,fn ,@args)
+           `(,fn ,old ,@args))))
+
+(MACRO
+  (>> first @rest)
+    (foldl first rest -> old new
+      (MATCH-FAIL new
+        `(,fn ,@args)
+           `(,fn ,@args ,old))))
+----
