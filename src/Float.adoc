@@ -1,6 +1,16 @@
 .Float.nu
 [source]
 ----
+(USE {} = "./Order")
+
 # Internally, Nulan Floats are JavaScript Numbers
 (TYPE Float)
+
+(EXPORT {}
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/Float")
+    (_order :: (-> Float Float Order Order Order Order)))
+
+  (IMPLEMENT (%Order Float)
+    (order x y)
+      (_order x y *less *equal *more)))
 ----

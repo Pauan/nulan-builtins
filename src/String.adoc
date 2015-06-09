@@ -1,12 +1,25 @@
 .String.nu
 [source]
 ----
-# TODO this is all incorrect, Nulan Strings should be JavaScript Strings
-(USE {} = "./List")
+(USE {} = "./Order")
+(USE {} = "./Monoid")
 
-(TYPE Code-Point)
+# Internally, Nulan Strings are JavaScript Strings
+(TYPE String)
 
-(ALIAS Grapheme = (List Code-Point))
+(EXPORT {}
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/String")
+    (_order :: (-> String String Order Order Order Order))
 
-(ALIAS String = (List Grapheme))
+    (concat :: (-> String String @String String)))
+
+  (IMPLEMENT (%Monoid String)
+    (empty)
+      ""
+    (++ x y @r)
+      (concat x y @r))
+
+  (IMPLEMENT (%Order String)
+    (order x y)
+      (_order x y *less *equal *more)))
 ----

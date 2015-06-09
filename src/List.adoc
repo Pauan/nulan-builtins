@@ -4,6 +4,7 @@
 (USE {} = "./Maybe")
 (USE {} = "./Integer")
 (USE {} = "./Monoid")
+(USE {} = "./Order")
 
  #\
  # This relies upon two things:
@@ -45,12 +46,25 @@
     # but it's more efficient to have it be written in the FFI
     (push :: (-> (List a) a (List a))))
 
+#/
+  (IMPLEMENT (IMPLEMENT (%Order a)
+               (%Order (List a)))
+    (order x y)
+      (MATCH (order (list_length x)
+                    (list_length y))
+        *less
+          *less
+        *equal
+        *more
+          *more))
+/#
+
   (IMPLEMENT (%Monoid (List a))
     (empty)
       (*list)
 
-    (++ @l)
-      (list_concat @l))
+    (++ x y @l)
+      (list_concat x y @l))
 
   (FUNCTION
     (nth :: (-> (List a) Integer (Maybe a)))

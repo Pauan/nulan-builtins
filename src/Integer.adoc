@@ -1,6 +1,16 @@
 .Integer.nu
 [source]
 ----
+(USE {} = "./Order")
+
 # Internally, Nulan Integers are JavaScript Numbers
 (TYPE Integer)
+
+(EXPORT {}
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/Integer")
+    (_order :: (-> Integer Integer Order Order Order Order)))
+
+  (IMPLEMENT (%Order Integer)
+    (order x y)
+      (_order x y *less *equal *more)))
 ----
