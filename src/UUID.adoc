@@ -1,0 +1,33 @@
+.UUID.nu
+[source]
+----
+(USE {} = "./String")
+(USE {} = "./Order")
+(USE {} = "./Cast")
+(USE {} = "./Maybe")
+
+(TYPE UUID)
+
+(EXPORT { uuid }
+
+  (FFI-IMPORT (github "Pauan/nulan-builtins-ffi" "0.1.0" "src/UUID")
+    (uuid :: (-> String UUID))
+
+    (UUID_to_String :: (-> UUID String))
+
+    (String_to_UUID :: (-> String (-> UUID a) a a))
+
+    (uuid_order :: (-> UUID UUID Order Order Order Order)))
+
+  (IMPLEMENT (%Order UUID)
+    (order x y)
+      (uuid_order x y *less *equal *more))
+
+  (IMPLEMENT (%Cast UUID String)
+    (cast x)
+      (UUID_to_String x))
+
+  (IMPLEMENT (%Cast-Maybe String UUID)
+    (cast-maybe x)
+      (String_to_UUID x *some *none)))
+----
